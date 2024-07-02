@@ -8,7 +8,7 @@ export default async function Home() {
   const [carousel, movies, trailer] = await Promise.all([
     handleMovies({ page: 1, limit: 24, type: "hoathinh" }),
     handleMovies({ page: 1, limit: 50 }),
-    handleMovies({ page: 1, limit: 20, status: "trailer" }),
+    handleMovies({ page: 1, limit: 24, status: "trailer" }),
   ]);
 
   const anime = carousel?.items;
@@ -61,7 +61,7 @@ export default async function Home() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">Sắp chiếu</h2>
             <Button variant={"outline"} size={"sm"}>
-              <Link href={"/the-loai/moi-cap-nhat"}>Xem Thêm</Link>
+              <Link href={"/the-loai/trailer"}>Xem Thêm</Link>
             </Button>
           </div>
           <CardMainList

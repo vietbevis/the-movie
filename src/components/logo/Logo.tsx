@@ -23,6 +23,7 @@ const Logo = ({
         alt=""
         width={54}
         height={54}
+        priority
         className={classNameImg}
       />
       <span className={classNameBrand}>{name}</span>

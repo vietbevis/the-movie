@@ -1,7 +1,6 @@
 import { checkImage, cn } from "@/lib/utils";
 import { MoviesResponseType } from "@/types";
 import { PlayCircleIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -13,20 +12,17 @@ const CardMain = ({
   className?: string;
 }) => {
   return (
-    <div
-      title={movie?.name}
-      className={cn("dark:bg-dark1 bg-bgEE rounded-lg group", className)}
-    >
+    <div title={movie?.name} className={cn("rounded-lg group", className)}>
       <Link
         href={`/${movie?.slug}`}
         className="w-full relative aspect-[3/4] mb-2 rounded-md overflow-hidden block"
       >
-        <Image
+        <img
           src={checkImage(movie?.thumb_url)}
           alt={movie?.name}
           width={300}
           height={200}
-          className="rounded-md w-full h-full object-cover group-hover:scale-110 tránisition-all duration-300"
+          className="rounded-md w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 group-hover:bg-opacity-60 group-hover:opacity-100 transition-all duration-300">
           <PlayCircleIcon

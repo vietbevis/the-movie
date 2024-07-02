@@ -1,7 +1,6 @@
 import { checkImage, cn } from "@/lib/utils";
 import { MoviesResponseType } from "@/types";
 import { PlayCircleIcon, Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -16,9 +15,9 @@ const CardCarousel = ({
     <div className={cn("aspect-[3/4]", className)}>
       <div
         className="w-full h-full rounded-sm overflow-hidden relative group select-none"
-        title="Movies"
+        title={data?.name}
       >
-        <Image
+        <img
           src={checkImage(data?.thumb_url)}
           alt=""
           width={300}

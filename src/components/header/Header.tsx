@@ -19,7 +19,7 @@ const Header = () => {
             <MenuMobile />
           </div>
           <Logo
-            name="netflix"
+            name="vitflix"
             classNameContainer="flex items-center gap-3 text-2xl font-bold"
             classNameBrand="hidden md:block uppercase"
             classNameImg="w-12 h-12 md:w-14 md:h-14"
@@ -27,7 +27,7 @@ const Header = () => {
           <div className="mx-auto lg:block hidden">
             <MenuLink />
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto lg:ml-0 flex items-center gap-2">
             <Button
               variant={"outline"}
               className="size-10 p-2"

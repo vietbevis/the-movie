@@ -1,3 +1,6 @@
+import { handleMovies } from "@/apiRequest";
+import { categories, countries } from "@/constants";
+import { MovieListResponseType } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -9,4 +12,107 @@ export function checkImage(url: string) {
   return url?.startsWith("https://apii.online/image/")
     ? url
     : `https://apii.online/image/${url}`;
+}
+
+export async function filterMovies({
+  searchParams,
+  params,
+}: {
+  searchParams: {
+    page?: string;
+    category?: string;
+    country?: string;
+    year?: string;
+    type?: string;
+    status?: string;
+  };
+  params: { slug: string; filter: string };
+}) {
+  const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+  let data: MovieListResponseType | undefined = undefined;
+  let query = "";
+  if (params.slug === "the-loai") {
+    if (params.filter === "moi-cap-nhat") {
+      query = "Phim mới cập nhật";
+      const res = await handleMovies({
+        page: currentPage,
+        limit: 50, // Vô nghĩa với phim mới cập nhật
+        category: searchParams.category,
+        country: searchParams.country,
+        year: searchParams.year,
+        type: searchParams.type as any,
+        status: searchParams.status as any,
+      });
+      data = res;
+    } else if (params.filter === "trailer") {
+      query = "Trailer";
+      const res = await handleMovies({
+        page: currentPage,
+        limit: 24,
+        status: params.filter,
+        category: searchParams.category,
+        country: searchParams.country,
+        year: searchParams.year,
+        type: searchParams.type as any,
+      });
+      data = res;
+    } else if (
+      params.filter === "series" ||
+      params.filter === "single" ||
+      params.filter === "hoathinh"
+    ) {
+      switch (params.filter) {
+        case "series":
+          query = "Phim bộ";
+          break;
+        case "single":
+          query = "Phim lẻ";
+          break;
+        case "hoathinh":
+          query = "Phim hoạt hình";
+          break;
+        default:
+          break;
+      }
+      const res = await handleMovies({
+        page: currentPage,
+        limit: 24,
+        type: params.filter,
+        category: searchParams.category,
+        country: searchParams.country,
+        year: searchParams.year,
+        status: searchParams.status as any,
+      });
+      data = res;
+    } else {
+      query =
+        categories.find((item) => item.slug === `/the-loai/${params.filter}`)
+          ?.name || "";
+      const res = await handleMovies({
+        page: currentPage,
+        limit: 24,
+        category: params.filter,
+        country: searchParams.country,
+        year: searchParams.year,
+        type: searchParams.type as any,
+        status: searchParams.status as any,
+      });
+      data = res;
+    }
+  } else {
+    query =
+      countries.find((item) => item.slug === `/quoc-gia/${params.filter}`)
+        ?.name || "";
+    const res = await handleMovies({
+      page: currentPage,
+      limit: 24,
+      country: params.filter,
+      category: searchParams.category,
+      year: searchParams.year,
+      type: searchParams.type as any,
+      status: searchParams.status as any,
+    });
+    data = res;
+  }
+  return { data, query };
 }

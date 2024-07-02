@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
-import Image from "next/image";
 import { checkImage } from "@/lib/utils";
 import { Star } from "lucide-react";
 
@@ -25,7 +24,7 @@ const MovieDetails = async ({ movieDetail }: any) => {
             {isLoading ? (
               <Skeleton className="h-full w-full" />
             ) : (
-              <Image
+              <img
                 src={checkImage(movie?.thumb_url)}
                 width={3200}
                 height={4800}
@@ -73,7 +72,7 @@ const MovieDetails = async ({ movieDetail }: any) => {
             <p className="opacity-50">
               {movie?.origin_name} ({movie?.year})
             </p>
-            <div className="dark:bg-dark1 bg-bgEE py-2 px-3 mt-3 space-y-2 rounded-sm lg:text-base text-sm">
+            <div className="py-2 px-3 mt-3 space-y-2 rounded-sm lg:text-base text-sm">
               <p>
                 <span className="font-semibold opacity-50">Trạng thái:</span>{" "}
                 <span className="bg-background px-2">
@@ -117,7 +116,7 @@ const MovieDetails = async ({ movieDetail }: any) => {
                 {actor}
               </p>
             </div>
-            <div className="dark:bg-dark1 bg-bgEE p-3 mt-3 space-y-2 rounded-sm lg:text-base text-sm">
+            <div className="p-3 mt-3 space-y-2 rounded-sm lg:text-base text-sm">
               <div className="space-x-2 mb-4">
                 <Button>Thích</Button>
                 <Button>Chia sẻ</Button>

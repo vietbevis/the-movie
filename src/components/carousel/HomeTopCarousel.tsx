@@ -3,8 +3,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import CardCarousel from "../cards/CardCarousel";
 import { MoviesResponseType } from "@/types";
