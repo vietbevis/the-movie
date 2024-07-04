@@ -116,3 +116,63 @@ export async function filterMovies({
   }
   return { data, query };
 }
+
+export const filterIsDisabled = (params: { filter: string }) => {
+  const { filter } = params;
+
+  // Tìm category và country
+  const categoryIsExists = categories.find(
+    (c) => c.slug === `/the-loai/${filter}`
+  );
+  const countryIsExists = countries.find(
+    (c) => c.slug === `/quoc-gia/${filter}`
+  );
+
+  // Xác định typeIsDisabled
+  let typeIsDisabled: {
+    name?: string;
+    disabled?: boolean;
+  } = {};
+  const typeMap: { [key: string]: string } = {
+    series: "Phim bộ",
+    single: "Phim lẻ",
+    hoathinh: "Hoạt hình",
+  };
+
+  if (typeMap[filter]) {
+    typeIsDisabled = {
+      name: typeMap[filter],
+      disabled: true,
+    };
+  }
+
+  // Xác định statusIsDisabled
+  let statusIsDisabled: {
+    name?: string;
+    disabled?: boolean;
+  } = {};
+  const statusMap: { [key: string]: string } = {
+    trailer: "Trailer",
+    ongoing: "Đang cập nhật",
+    completed: "Hoàn thành",
+  };
+  if (statusMap[filter]) {
+    statusIsDisabled = {
+      name: statusMap[filter],
+      disabled: true,
+    };
+  }
+
+  return {
+    categoryIsDisabled: {
+      name: categoryIsExists?.name,
+      disabled: Boolean(categoryIsExists),
+    },
+    countryIsDisabled: {
+      name: countryIsExists?.name,
+      disabled: Boolean(countryIsExists),
+    },
+    typeIsDisabled,
+    statusIsDisabled,
+  };
+};

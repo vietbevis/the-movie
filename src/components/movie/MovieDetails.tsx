@@ -40,7 +40,7 @@ const MovieDetails = async ({ movieDetail }: any) => {
               </Button>
               <Button className="w-full">
                 <Link
-                  href={`/${movie?.slug}/${
+                  href={`/${movie?.slug}?episode=${
                     movieDetail?.episodes[0].server_data.length === 1
                       ? movieDetail?.episodes[0].server_data[0].slug
                       : "1"
@@ -116,7 +116,7 @@ const MovieDetails = async ({ movieDetail }: any) => {
                 {actor}
               </p>
             </div>
-            <div className="p-3 mt-3 space-y-2 rounded-sm lg:text-base text-sm">
+            {/* <div className="p-3 mt-3 space-y-2 rounded-sm lg:text-base text-sm">
               <div className="space-x-2 mb-4">
                 <Button>Thích</Button>
                 <Button>Chia sẻ</Button>
@@ -136,7 +136,7 @@ const MovieDetails = async ({ movieDetail }: any) => {
                 </div>
                 <p className="ml-2">(10 điêm / 100 lượt)</p>
               </div>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
@@ -155,7 +155,10 @@ const MovieDetails = async ({ movieDetail }: any) => {
               className="size-10 dark:bg-gray-700 dark:hover:bg-gray-800 p-0"
             >
               <Link
-                href={`/${movie?.slug}/${item.slug}`}
+                href={`/${movie?.slug}?episode=${item.slug.replace(
+                  /^tap-/,
+                  ""
+                )}`}
                 className="w-full h-full leading-10 text-center"
               >
                 {index + 1}

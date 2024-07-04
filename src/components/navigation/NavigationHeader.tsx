@@ -54,13 +54,9 @@ const NavigationHeader = ({
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <p className="line-clamp-1 min-w-14 dark:text-white text-primary font-medium">
-                    {episode?.slug.toLowerCase() === "full"
+                    {episode.toLowerCase() === "full"
                       ? "Full"
-                      : `Tập ${
-                          episode?.name.startsWith("Tập ")
-                            ? parseInt(episode?.name.slice(4))
-                            : parseInt(episode?.name)
-                        }`}
+                      : `Tập ${episode}`}
                   </p>
                 </BreadcrumbItem>
               </>

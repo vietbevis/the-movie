@@ -1,5 +1,5 @@
 import { PropsMoviesAction } from "@/actions/common.action";
-import { MovieListResponseType } from "@/types";
+import { MovieDetailType, MovieListResponseType } from "@/types";
 
 export const handleMovies = async ({
   year,
@@ -32,10 +32,10 @@ export const handleMovies = async ({
         "Content-Type": "application/json",
       },
       next: {
-        revalidate: 60,
+        revalidate: 86400,
       },
     });
-    const data = await response.json();
+    const data = (await response.json()) as MovieListResponseType;
     return data;
   } catch (error) {
     console.error("Error fetching handleMoviesAction:", error);
@@ -53,10 +53,10 @@ export const handleMovieDetail = async (slug: string) => {
         "Content-Type": "application/json",
       },
       next: {
-        revalidate: 60,
+        revalidate: 86400,
       },
     });
-    const data = await response.json();
+    const data = (await response.json()) as MovieDetailType;
     return data;
   } catch (error) {
     console.error("Error fetching handleMovieDetailAction:", error);

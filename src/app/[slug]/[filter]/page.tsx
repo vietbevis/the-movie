@@ -2,7 +2,7 @@ import CardMainList from "@/components/cards/CardMainList";
 import Divider from "@/components/divider/Divider";
 import NavigationHeader from "@/components/navigation/NavigationHeader";
 import PaginationCustom from "@/components/pagination/PaginationCustom";
-import { filterMovies } from "@/lib/utils";
+import { filterIsDisabled, filterMovies } from "@/lib/utils";
 import { MovieListResponseType, SlugType } from "@/types";
 import React from "react";
 import {
@@ -41,20 +41,15 @@ const page = async ({
   };
 }) => {
   const { data, query } = await filterMovies({ searchParams, params });
-  const categoryIsDisabled = Boolean(
-    categories.find((c) => c.slug === `/the-loai/${params.filter}`)
-  );
-  const countryIsDisabled = Boolean(
-    countries.find((c) => c.slug === `/quoc-gia/${params.filter}`)
-  );
-  let typeIsDisabled = false;
-  if (
-    params.filter === "series" ||
-    params.filter === "single" ||
-    params.filter === "hoathinh"
-  )
-    typeIsDisabled = true;
 
+  const {
+    categoryIsDisabled,
+    countryIsDisabled,
+    typeIsDisabled,
+    statusIsDisabled,
+  } = filterIsDisabled(params);
+
+  // Generate query string
   const filteredEntries = Object.entries(searchParams).filter(
     ([key, value]) => key !== "page"
   );
@@ -79,15 +74,17 @@ const page = async ({
           <Select
             name="category"
             defaultValue={searchParams.category ?? ""}
-            disabled={categoryIsDisabled}
+            disabled={categoryIsDisabled.disabled}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Thể loại" />
+              <SelectValue
+                placeholder={categoryIsDisabled.name ?? "Thể loại"}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="null" className="font-medium">
-                  Thể loại
+                  {categoryIsDisabled.name ?? "Thể loại"}
                 </SelectItem>
                 {categories.map((category) => (
                   <SelectItem
@@ -104,15 +101,15 @@ const page = async ({
           <Select
             name="country"
             defaultValue={searchParams.country ?? ""}
-            disabled={countryIsDisabled}
+            disabled={countryIsDisabled.disabled}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Quốc gia" />
+              <SelectValue placeholder={countryIsDisabled.name ?? "Quốc gia"} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="null" className="font-medium">
-                  Quốc gia
+                  {countryIsDisabled.name ?? "Quốc gia"}
                 </SelectItem>
                 {countries.map((country) => (
                   <SelectItem
@@ -128,7 +125,7 @@ const page = async ({
           {/* Năm sản xuất */}
           <Select name="year" defaultValue={searchParams.year ?? ""}>
             <SelectTrigger>
-              <SelectValue placeholder="Năm sản xuất" />
+              <SelectValue placeholder={searchParams.year ?? "Năm sản xuất"} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -147,10 +144,10 @@ const page = async ({
           <Select
             name="type"
             defaultValue={searchParams?.type ?? ""}
-            disabled={typeIsDisabled}
+            disabled={typeIsDisabled.disabled}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Loại phim" />
+              <SelectValue placeholder={typeIsDisabled.name ?? "Loại phim"} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -164,9 +161,15 @@ const page = async ({
             </SelectContent>
           </Select>
           {/* Trạng thái */}
-          <Select name="status" defaultValue={searchParams?.status ?? ""}>
+          <Select
+            name="status"
+            defaultValue={searchParams?.status ?? ""}
+            disabled={statusIsDisabled.disabled}
+          >
             <SelectTrigger>
-              <SelectValue placeholder="Trạng thái" />
+              <SelectValue
+                placeholder={statusIsDisabled.name ?? "Trạng thái"}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
