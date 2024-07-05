@@ -7,15 +7,31 @@ import { Metadata } from "next";
 import React from "react";
 
 export async function generateStaticParams() {
-  // const data = await handleMovies({ page: 1, limit: 50 });
   const paths: { slug: string }[] = [];
-  for (let i = 1; i <= 5; i++) {
-    const response = await handleMovies({ page: i, limit: 50 });
-    response &&
-      response.items.forEach((item) => {
-        paths.push({ slug: item.slug });
-      });
-  }
+
+  const requests = [
+    ...Array.from({ length: 5 }, (_, i) =>
+      handleMovies({ page: i + 1, limit: 50 })
+    ),
+    ...Array.from({ length: 2 }, (_, i) =>
+      handleMovies({ page: i + 1, limit: 50, status: "trailer" })
+    ),
+    ...Array.from({ length: 2 }, (_, i) =>
+      handleMovies({ page: i + 1, limit: 50, type: "series" })
+    ),
+    ...Array.from({ length: 2 }, (_, i) =>
+      handleMovies({ page: i + 1, limit: 50, type: "single" })
+    ),
+  ];
+
+  const allResponses = await Promise.all(requests);
+
+  allResponses.forEach((response) => {
+    response.items.forEach((item) => {
+      paths.push({ slug: item.slug });
+    });
+  });
+
   return paths;
 }
 

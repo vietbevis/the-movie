@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: "Xem phim, series, anime miễn phí tại VITFLIX",
 };
 
+export const revalidate = 86400;
+
 export default function RootLayout({
   children,
 }: Readonly<{
