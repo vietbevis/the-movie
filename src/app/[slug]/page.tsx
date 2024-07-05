@@ -10,16 +10,16 @@ export async function generateStaticParams() {
   const paths: { slug: string }[] = [];
 
   const requests = [
-    ...Array.from({ length: 5 }, (_, i) =>
+    ...Array.from({ length: 3 }, (_, i) =>
       handleMovies({ page: i + 1, limit: 50 })
     ),
-    ...Array.from({ length: 2 }, (_, i) =>
+    ...Array.from({ length: 1 }, (_, i) =>
       handleMovies({ page: i + 1, limit: 50, status: "trailer" })
     ),
-    ...Array.from({ length: 2 }, (_, i) =>
+    ...Array.from({ length: 1 }, (_, i) =>
       handleMovies({ page: i + 1, limit: 50, type: "series" })
     ),
-    ...Array.from({ length: 2 }, (_, i) =>
+    ...Array.from({ length: 1 }, (_, i) =>
       handleMovies({ page: i + 1, limit: 50, type: "single" })
     ),
   ];
