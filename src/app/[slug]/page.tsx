@@ -6,34 +6,34 @@ import PlayVideo from "@/components/player/PlayVideo";
 import { Metadata } from "next";
 import React from "react";
 
-export async function generateStaticParams() {
-  const paths: { slug: string }[] = [];
+//export async function generateStaticParams() {
+//  const paths: { slug: string }[] = [];
+//
+//  const requests = [
+//    ...Array.from({ length: 3 }, (_, i) =>
+//      handleMovies({ page: i + 1, limit: 50 })
+//    ),
+//    ...Array.from({ length: 1 }, (_, i) =>
+//      handleMovies({ page: i + 1, limit: 50, status: "trailer" })
+//    ),
+//    ...Array.from({ length: 1 }, (_, i) =>
+//      handleMovies({ page: i + 1, limit: 50, type: "series" })
+//    ),
+//    ...Array.from({ length: 1 }, (_, i) =>
+//      handleMovies({ page: i + 1, limit: 50, type: "single" })
+//    ),
+//  ];
 
-  const requests = [
-    ...Array.from({ length: 3 }, (_, i) =>
-      handleMovies({ page: i + 1, limit: 50 })
-    ),
-    ...Array.from({ length: 1 }, (_, i) =>
-      handleMovies({ page: i + 1, limit: 50, status: "trailer" })
-    ),
-    ...Array.from({ length: 1 }, (_, i) =>
-      handleMovies({ page: i + 1, limit: 50, type: "series" })
-    ),
-    ...Array.from({ length: 1 }, (_, i) =>
-      handleMovies({ page: i + 1, limit: 50, type: "single" })
-    ),
-  ];
+//  const allResponses = await Promise.all(requests);
 
-  const allResponses = await Promise.all(requests);
+//  allResponses.forEach((response) => {
+//    response.items.forEach((item) => {
+//      paths.push({ slug: item.slug });
+//    });
+//  });
 
-  allResponses.forEach((response) => {
-    response.items.forEach((item) => {
-      paths.push({ slug: item.slug });
-    });
-  });
-
-  return paths;
-}
+//  return paths;
+//}
 
 export async function generateMetadata({
   params,
